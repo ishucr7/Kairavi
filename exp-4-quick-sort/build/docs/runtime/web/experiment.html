@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Quick Sort experiment</title>
+<!-- 2017-07-18 Tue 13:00 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="VLEAD" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../../style/css/worg-style.css" />
+<link rel="stylesheet" type="text/css" href="../../style/css/override.css" />
+<link rel="icon" type="image/png" href="../../style/img/favicon/popl.png" />
+<script type="text/javascript" src="../../style/js/org-info.js">
+/**
+ *
+ * @source: ../../style/js/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in ../../style/js/org-info.js.
+ *
+ * Copyright (C) 2012-2013 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in ../../style/js/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "1");
+org_html_manager.set("LINK_HOME", "../../index.html");
+org_html_manager.set("LINK_UP", "../index.html");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="../../index.html"> HOME </a>
+</div><div id="content">
+<h1 class="title">Quick Sort experiment</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. Code and narration</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Index HTML</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. HTML for the experiment</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2. JS</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This experiment demonstrates the quick sort in an interactice way using the notation of partition and then splits the array into left,pivot and right arrays. It then applies the quick sort to all the three subarrays.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Code and narration</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Index HTML</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> HTML for the experiment</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<div class="org-src-container">
+
+<pre class="src src-html"> &lt;<span style="font-weight: bold;">!doctype</span> html&gt;
+&lt;<span style="font-weight: bold;">head</span>&gt;
+&lt;<span style="font-weight: bold;">meta</span> <span style="font-weight: bold; font-style: italic;">charset</span>=<span style="font-style: italic;">"utf-8"</span>&gt;
+&lt;<span style="font-weight: bold;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Dagre D3 Demo: Sentence Tokenization</span>&lt;/<span style="font-weight: bold;">title</span>&gt;
+
+&lt;<span style="font-weight: bold;">link</span> <span style="font-weight: bold; font-style: italic;">rel</span>=<span style="font-style: italic;">"stylesheet"</span> <span style="font-weight: bold; font-style: italic;">href</span>=<span style="font-style: italic;">"demo.css"</span>&gt;
+&lt;<span style="font-weight: bold;">script</span> <span style="font-weight: bold; font-style: italic;">src</span>=<span style="font-style: italic;">"http://d3js.org/d3.v3.min.js"</span> <span style="font-weight: bold; font-style: italic;">charset</span>=<span style="font-style: italic;">"utf-8"</span>&gt;&lt;/<span style="font-weight: bold;">script</span>&gt;
+&lt;<span style="font-weight: bold;">script</span> <span style="font-weight: bold; font-style: italic;">src</span>=<span style="font-style: italic;">"../../../../../node_modules/dagre-d3/dist/dagre-d3.js"</span>&gt;&lt;/<span style="font-weight: bold;">script</span>&gt;
+        
+&lt;<span style="font-weight: bold;">style</span> <span style="font-weight: bold; font-style: italic;">id</span>=<span style="font-style: italic;">"css"</span>&gt;
+/* This sets the color for "TK" nodes to a light blue green. */
+g.type-TK &gt; rect {
+  fill: #00ffd0;
+}
+
+text {
+  font-weight: 300;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+  font-size: 14px;
+}
+
+.node rect {
+  stroke: #999;
+  fill: #fff;
+  stroke-width: 1.5px;
+}
+
+.edgePath path {
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+&lt;/<span style="font-weight: bold;">style</span>&gt;
+&lt;/<span style="font-weight: bold;">head</span>&gt;
+&lt;<span style="font-weight: bold;">body</span>&gt;
+&lt;<span style="font-weight: bold;">link</span> <span style="font-weight: bold; font-style: italic;">rel</span>="stylesheet" <span style="font-weight: bold; font-style: italic;">href</span>="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"&gt;
+  &lt;<span style="font-weight: bold;">script</span> <span style="font-weight: bold; font-style: italic;">src</span>="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"&gt;&lt;/<span style="font-weight: bold;">script</span>&gt;
+  &lt;<span style="font-weight: bold;">script</span> <span style="font-weight: bold; font-style: italic;">src</span>="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"&gt;&lt;/<span style="font-weight: bold;">script</span>&gt;
+&lt;/<span style="font-weight: bold;">head</span>&gt;
+&lt;<span style="font-weight: bold;">body</span>&gt;
+&lt;<span style="font-weight: bold;">div</span> <span style="font-weight: bold; font-style: italic;">class</span>="jumbotron text-center"&gt;
+  &lt;<span style="font-weight: bold;">h2</span>&gt;<span style="font-weight: bold; font-style: italic; text-decoration: underline;">Quick Sort</span>&lt;/<span style="font-weight: bold;">h2</span>&gt;
+&lt;/<span style="font-weight: bold;">div</span>&gt;
+
+&lt;<span style="font-weight: bold;">div</span> <span style="font-weight: bold; font-style: italic;">class</span>="form-group"&gt;
+  &lt;<span style="font-weight: bold;">label</span> <span style="font-weight: bold; font-style: italic;">for</span>="arr" <span style="font-weight: bold; font-style: italic;">style</span>="font-size:150%"&gt;Please enter the array to sort&lt;/<span style="font-weight: bold;">label</span>&gt;
+  &lt;<span style="font-weight: bold;">input</span> <span style="font-weight: bold; font-style: italic;">type</span>="text" <span style="font-weight: bold; font-style: italic;">class</span>="form-control" <span style="font-weight: bold; font-style: italic;">style</span>="width:100%;font-size: 150%" <span style="font-weight: bold; font-style: italic;">id</span>="arr"&gt;
+&lt;/<span style="font-weight: bold;">div</span>&gt;
+
+&lt;<span style="font-weight: bold;">div</span>&gt;
+&lt;<span style="font-weight: bold;">button</span> <span style="font-weight: bold; font-style: italic;">type</span>="button" <span style="font-weight: bold; font-style: italic;">id</span>="but1" <span style="font-weight: bold; font-style: italic;">style</span>="position:absolute;left:49%" <span style="font-weight: bold; font-style: italic;">class</span>="btn btn-success btn-lg" <span style="font-weight: bold; font-style: italic;">onclick</span>="helper()"&gt;Sort&lt;/<span style="font-weight: bold;">button</span>&gt;
+
+&lt;/<span style="font-weight: bold;">div</span>&gt;
+
+&lt;<span style="font-weight: bold;">br</span>&gt;&lt;<span style="font-weight: bold;">br</span>&gt;&lt;<span style="font-weight: bold;">br</span>/&gt;
+
+&lt;<span style="font-weight: bold;">svg</span> <span style="font-weight: bold; font-style: italic;">id</span>="svg-canvas" width=100% height=600 <span style="font-weight: bold; font-style: italic;">style</span>="position: absolute;left:25%"&gt;&lt;/<span style="font-weight: bold;">svg</span>&gt;
+
+
+
+&lt;<span style="font-weight: bold;">script</span> <span style="font-weight: bold; font-style: italic;">src</span>="../static/js/quick.js"&gt;&lt;/<span style="font-weight: bold;">script</span>&gt;
+&lt;/<span style="font-weight: bold;">body</span>&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> JS</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>Helper to call various functions
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-javascript"><span style="font-weight: bold;">function</span> <span style="font-weight: bold;">helper</span>()
+{
+        <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Array to be sorted</span>
+        <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">array</span>=document.getElementById(<span style="font-style: italic;">'arr'</span>).value
+        <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">arr</span>=array.split(<span style="font-style: italic;">""</span>)
+        <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">sorted_array</span>=quick_Sort(arr,1)
+        drawedge(sorted_array);
+        draw();
+        
+}
+</pre>
+</div>
+<ul class="org-ul">
+<li>Global definition of the final graph.
+</li>
+<li>Global set of variables
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-javascript"><span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">g</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">dagreD3.graphlib.Graph</span>()
+.setGraph({})
+.setDefaultEdgeLabel(<span style="font-weight: bold;">function</span>() { <span style="font-weight: bold;">return</span> {}; });
+<span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">visited</span>=[];
+<span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">leaf</span>=[];
+</pre>
+</div>
+<ul class="org-ul">
+<li>Main quick sort function.
+</li>
+<li>Nodes are also constructed with id and data
+<ul class="org-ul">
+<li>The top node has id as i;
+</li>
+<li>The partitioned node which marks the position of pivot with brackets is marked below with id as -i.
+</li>
+
+<li>Child nodes are marked by the ID's 3i-1 ,3*i &amp; 3*i+1 rule every node has three childre.
+</li>
+<li>Data is unsorted arrays.
+</li>
+</ul>
+</li>
+<li>All the id's are pushed into the visited array.
+</li>
+<li>Quick sort is called on the three subarrays i.e. left - for smaller elements , pivot-for pivot and right-for larger elements.
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-javascript"><span style="font-weight: bold;">function</span> <span style="font-weight: bold;">quick_Sort</span>(<span style="font-weight: bold; font-style: italic;">origArray</span>,<span style="font-weight: bold; font-style: italic;">count</span>) 
+{
+        <span style="font-weight: bold;">if</span>(origArray.length==0)<span style="font-weight: bold;">return</span>[];
+
+        <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">lab</span>=origArray.toString();
+
+
+        g.setNode(count,{ label: lab,<span style="font-weight: bold;">class</span>: <span style="font-style: italic;">"type-TOP"</span> ,labelStyle: <span style="font-style: italic;">"font-weight: bold"</span>,id:count});
+
+        visited.push(count)
+
+        <span style="font-weight: bold;">if</span> (origArray.length &lt;= 1) 
+        { 
+                leaf.push(count)
+                <span style="font-weight: bold;">return</span> origArray;
+        } 
+        <span style="font-weight: bold;">else</span>
+        {
+
+                <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">left</span> = [];
+                <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">right</span> = [];
+                <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">newArray</span> = [];
+                <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">pivot</span> = origArray.pop();
+                <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">length</span> = origArray.length;
+
+                <span style="font-weight: bold;">for</span> (<span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">i</span> = 0; i &lt; length; i++) 
+                {
+                        <span style="font-weight: bold;">if</span> (origArray[i] &lt;=pivot)
+                        {
+                                left.push(origArray[i]);
+                        } 
+                        <span style="font-weight: bold;">else</span> <span style="font-weight: bold;">if</span>(origArray[i]&gt;pivot)
+                        {
+                                right.push(origArray[i]);
+                        }
+                }
+
+                <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">temp</span>=left.toString()+<span style="font-style: italic;">',['</span>+pivot.toString()+<span style="font-style: italic;">'],'</span>+right.toString();
+
+                g.setNode(-count,{ label: temp,<span style="font-weight: bold;">class</span>: <span style="font-style: italic;">"type-TOP"</span> ,labelStyle: <span style="font-style: italic;">"font-weight: bold"</span>,id:-count});
+                visited.push(-count)
+
+
+                <span style="font-weight: bold;">return</span> newArray.concat(quick_Sort(left,3*count-1), quick_Sort([pivot],3*count),quick_Sort(right,3*count+1));
+        }
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Main function which renders the graph after we have added nodes and edges.
+</li>
+<li>Basic d3 selectors along with dagre.js syntax.
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-javascript"><span style="font-weight: bold;">function</span> <span style="font-weight: bold;">draw</span>()
+{
+        g.nodes().forEach(<span style="font-weight: bold;">function</span>(<span style="font-weight: bold; font-style: italic;">v</span>) 
+        {
+                 <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">node</span> = g.node(v);
+                <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Round the corners of the nodes</span>
+                node.rx = node.ry = 5;
+        })
+
+        <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Create the renderer</span>
+        <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">render</span> = <span style="font-weight: bold;">new</span> <span style="font-weight: bold; text-decoration: underline;">dagreD3.render</span>();
+
+        <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Set up an SVG group so that we can translate the final graph.</span>
+        <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">svg</span> = d3.select(<span style="font-style: italic;">"svg"</span>),
+        svgGroup = svg.append(<span style="font-style: italic;">"g"</span>);
+
+        <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Run the renderer. This is what draws the final graph.</span>
+        render(d3.select(<span style="font-style: italic;">"svg g"</span>), g);
+
+        <span style="font-weight: bold; font-style: italic;">// </span><span style="font-weight: bold; font-style: italic;">Center the graph</span>
+        <span style="font-weight: bold;">var</span> <span style="font-weight: bold; font-style: italic;">xCenterOffset</span> = (svg.attr(<span style="font-style: italic;">"width"</span>) - g.graph().width) / 2;
+        svgGroup.attr(<span style="font-style: italic;">"transform"</span>, <span style="font-style: italic;">"translate("</span> + xCenterOffset + <span style="font-style: italic;">", 20)"</span>);
+        svg.attr(<span style="font-style: italic;">"height"</span>, g.graph().height + 40);
+
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Funtion which connects individual components.
+</li>
+<li>First the nodes are connected which are with id i and -i as they are normal arrays and partitioned arrays.
+</li>
+<li>Then -i node is connected to 3*i-1, 3*i and 3*i+1 with suitable labels.
+</li>
+<li>The leaf nodes are there in global leaf array which when combined gives the final sorted array.
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-javascript"><span style="font-weight: bold;">function</span> <span style="font-weight: bold;">drawedge</span>(<span style="font-weight: bold; font-style: italic;">arr</span>)
+{
+        <span style="font-weight: bold;">for</span>(i=1;i&lt;=1045;i++)
+        {
+                        
+                
+                <span style="font-weight: bold;">if</span>(visited.indexOf(i)!=-1 &amp;&amp; visited.indexOf(-i)!=-1)
+                {
+                        
+                        g.setEdge(i,-i,{label:<span style="font-style: italic;">"PARTITION"</span>});
+                }
+
+                
+        }
+        <span style="font-weight: bold;">for</span>(i=1;i&lt;=1045;i++)
+        {
+                <span style="font-weight: bold;">if</span>(visited.indexOf(-i)!=-1 &amp;&amp; visited.indexOf(3*i-1)!=-1)
+                {
+                        g.setEdge(-i,3*i-1,{label:<span style="font-style: italic;">"LEFT"</span>});
+                        
+                }
+        }
+        <span style="font-weight: bold;">for</span>(i=1;i&lt;=1045;i++)
+        {
+                <span style="font-weight: bold;">if</span>(visited.indexOf(-i)!=-1 &amp;&amp; visited.indexOf(3*i)!=-1)
+                {
+                        g.setEdge(-i,3*i,{label:<span style="font-style: italic;">"PIVOT"</span>});
+                        
+                }
+        }
+
+        <span style="font-weight: bold;">for</span>(i=1;i&lt;=1045;i++)
+        {
+                <span style="font-weight: bold;">if</span>(visited.indexOf(-i)!=-1 &amp;&amp; visited.indexOf(3*i+1)!=-1)
+                {
+                        g.setEdge(-i,3*i+1,{label:<span style="font-style: italic;">"RIGHT"</span>});
+                        
+                }
+        }
+
+        g.setNode(0,{ label:arr.toString(),<span style="font-weight: bold;">class</span>: <span style="font-style: italic;">"type-TOP"</span> });
+        
+        <span style="font-weight: bold;">for</span>(i=0;i&lt;leaf.length;i++)
+        {
+                g.setEdge(leaf[i],0,{label:<span style="font-style: italic;">"SORTEDARRAY"</span>});
+                
+        }
+
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">[2017-07-18 Tuesday]</span></span></p>
+<p class="author">Author: VLEAD</p>
+<p class="date">Created: 2017-07-18 Tue 13:00</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+* Merge sort experiment 3
+- In the 3rd version we will use dagre-d3.js a library based on d3 itself.
+- The tree would be generated using dagre.
+- The split nodes will be generated using the binary logic of having children of index i as 2*i+1 and 2*i+2.
+- After everything is splitted then merging will begin.
+- Merge function will be modified to accomodate formation of nodes.
+- All the ID's will be mapped so as to obtain the data each node represents anytime.
+- Then merging of nodes would be done.
+- No definite logic is there so would go for hard coding i.e. brute force for merge.
+- Will look for logic for merging as time passes by.
+
+* Problems faced while implementing
+- Problem in generating splits on button clicks.
+  - This can be done using the row numbers as the nodes are marked using binary logic.
+  - Just use the row number and generate all the nodes that can be there in this row and see if they exist using the visited array.
+  - Draw edges accordingly.
+- But use the graph as a local variable then as the global cannot be altered again and again - solution: a reset function for resetting all the local variables.
+- No definite logic for merging was found so had to hard code i.e. use brute force for merge.
+
+
+
+
+ 

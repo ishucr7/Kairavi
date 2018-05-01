@@ -1,0 +1,21 @@
+#+TITLE: Requirements for Merge sort experiment
+#+AUTHOR: VLEAD
+#+DATE: [2016-07-1 Sat]
+#+PROPERTY: results output
+#+PROPERTY: exports code
+#+SETUPFILE: ../org-templates/level-1.org
+#+options: ^:nil
+#+LATEX: Literal LaTeX code for export
+
+* Introduction 
+  The requirements of =Merge sort experiment= are listed here.
+
+** Requirements
+*** Demonstrate the merge sort algorithm.
+*** Annotate diagram with split and merge notation.
+*** Show the recursive structure of the algorithm in terms of blackboxes.
+*** Array is taken as input from the user and user has to input whether space separated input or comma separated input.
+*** The tree should have labels of split and merge.
+*** A function which should act as a black box in which array will be the input and the tree would be the output.
+*** After this experiment we can convert any recursive algorithm into this annotation.
+

@@ -1,0 +1,14 @@
+* Quick Sort
+- Tree would be generated using dagre-d3 and html elements.
+- The last element will be the pivot.
+- The Paritioned array will be displayed just below the original array.
+- Then the split arrays will be partitioned into left ,pivot and right arrays.
+- Then the quick sort will be applied to the three arrays with approriate ID's
+i.e. 3*i-1,3*i and 3*i+1;
+- Then the leaf nodes will be combined to form the sorted array along with the approriate labels.
+
+* Problems faced
+* Final solution
+
+
+ 

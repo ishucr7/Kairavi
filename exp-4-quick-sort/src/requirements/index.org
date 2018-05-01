@@ -1,0 +1,18 @@
+#+TITLE: Requirements for Quick Sort experiment
+#+AUTHOR: VLEAD
+#+DATE: [2016-07-1 Sat]
+#+PROPERTY: results output
+#+PROPERTY: exports code
+#+SETUPFILE: ../org-templates/level-1.org
+#+options: ^:nil
+#+LATEX: Literal LaTeX code for export
+
+* Introduction 
+  The requirements of =Quick sort experiment= are listed here.
+
+** Requirements
+*** To demonstrate the quick sort algorithm.
+*** Annotate diagram with partition,left,pivot and right notation.
+*** Show the recursive structure of the algorithm.
+*** Array is taken as input from the user.
+
